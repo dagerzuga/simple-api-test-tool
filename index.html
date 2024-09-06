@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple API Test Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./assets/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <h1 id="simple-api-test-tool" class="title">Simple API Test Tool</h1>
+
+        <label for="endpoint" class="label">API Endpoint:</label>
+        <input type="text" id="endpoint" class="js-endpoint input">
+
+        <label for="request-type" class="label">Request Type:</label>
+        <select id="request-type" class="js-request-type select">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+        </select>
+
+        <label for="payload" class="label">Payload (JSON):</label>
+        <textarea id="payload" class="js-payload textarea"></textarea>
+
+        <label for="proxy-select" class="label">CORS Proxy:</label>
+        <select id="proxy-select" class="js-proxy-select select"></select>
+
+        <div class="multiple-requests">
+            <label for="request-count" class="label">Number of Requests:</label>
+            <input type="number" id="request-count" class="js-request-count input" value="1" min="1">
+
+            <label for="request-interval" class="label">Interval (ms):</label>
+            <input type="number" id="request-interval" class="js-request-interval input" value="0" min="0">
+        </div>
+
+        <button class="js-send-request button">Send Request(s)</button>
+
+        <div class="response-info">
+            <p>Completed Requests: <span class="js-completed-requests">0</span></p>
+            <p>Status: <span class="js-status"></span></p>
+            <p>Status Text: <span class="js-status-text"></span></p>
+        </div>
+
+        <div class="response-container">
+            <button class="copy-button" id="copyButton">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+            </button>
+            <pre class="js-response response"></pre>
+        </div>
+    </div>
+
+    <div id="toast" class="toast">Response copied to clipboard!</div>
+
+    <footer class="footer">
+        <p>This tool doesn't store any kind of information.</p>
+        <p><a href="https://github.com/dagerzuga/simple-api-test-tool" target="_blank">GitHub Repository</a></p>
+    </footer>
+
+    <button id="scrollToTopBtn" class="scroll-to-top-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <script src="app.js"></script>
+</body>
+</html>
