@@ -11,4 +11,4 @@ A lightweight, user-friendly web application for testing API endpoints with supp
 - Copy response to clipboard with a single click
 - Responsive design for desktop and mobile use
 
-## Live
+## Live: https://simple-api-test-tool.netlify.app/
