@@ -178,3 +178,11 @@ html {
   visibility: visible;
   opacity: 1;
 }
+
+.disclaimer-link {
+  color: #3498db;
+}
+
+.disclaimer-link:hover {
+  color: #2980b9;
+}
