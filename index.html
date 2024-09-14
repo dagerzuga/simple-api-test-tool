@@ -13,26 +13,46 @@
         <h1 id="simple-api-test-tool" class="title">Simple API Test Tool</h1>
 
         <label for="endpoint" class="label">API Endpoint:</label>
-        <input type="text" id="endpoint" class="js-endpoint input">
+        <input type="text" id="endpoint" class="js-endpoint input" placeholder="https://api.example.com/data">
 
-        <label for="request-type" class="label">Request Type:</label>
-        <select id="request-type" class="js-request-type select">
+        <label for="requestType" class="label">Request Type:</label>
+        <select id="requestType" class="js-request-type select">
             <option value="GET">GET</option>
             <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="PATCH">PATCH</option>
+            <option value="DELETE">DELETE</option>
+            <option value="HEAD">HEAD</option>
+            <option value="OPTIONS">OPTIONS</option>
         </select>
 
-        <label for="payload" class="label">Payload (JSON):</label>
-        <textarea id="payload" class="js-payload textarea"></textarea>
+        <label for="payloadFormat" class="label">Payload Format:</label>
+        <select id="payloadFormat" class="js-payload-format select">
+            <option value="application/json">JSON</option>
+            <option value="application/x-www-form-urlencoded">Form URL Encoded</option>
+            <option value="text/plain">Plain Text</option>
+            <option value="application/xml">XML</option>
+        </select>
 
-        <label for="proxy-select" class="label">CORS Proxy:</label>
-        <select id="proxy-select" class="js-proxy-select select"></select>
+        <label for="payload" class="label">Payload:</label>
+        <textarea id="payload" class="js-payload textarea" placeholder="Enter payload here"></textarea>
+
+        <label for="proxySelect" class="label">CORS Proxy:</label>
+        <select id="proxySelect" class="js-proxy-select select">
+            <!-- Proxy options will be populated by JavaScript -->
+        </select>
+
+        <div id="customProxyContainer" class="custom-proxy-container">
+            <label for="customProxy" class="label">Custom Proxy URL:</label>
+            <input type="text" id="customProxy" class="js-custom-proxy input" placeholder="https://your-custom-proxy.com/{url}">
+        </div>
 
         <div class="multiple-requests">
-            <label for="request-count" class="label">Number of Requests:</label>
-            <input type="number" id="request-count" class="js-request-count input" value="1" min="1">
+            <label for="requestCount" class="label">Number of Requests:</label>
+            <input type="number" id="requestCount" class="js-request-count input" value="1" min="1">
 
-            <label for="request-interval" class="label">Interval (ms):</label>
-            <input type="number" id="request-interval" class="js-request-interval input" value="0" min="0">
+            <label for="requestInterval" class="label">Interval (ms):</label>
+            <input type="number" id="requestInterval" class="js-request-interval input" value="0" min="0">
         </div>
 
         <button class="js-send-request button">Send Request(s)</button>
@@ -44,7 +64,7 @@
         </div>
 
         <div class="response-container">
-            <button class="copy-button" id="copyButton">
+            <button id="copyButton" class="copy-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
@@ -58,12 +78,12 @@
 
     <footer class="footer">
         <p>This tool doesn't store any kind of information.</p>
-        <p><a class="disclaimer-link" href="https://github.com/dagerzuga/simple-api-test-tool" target="_blank">GitHub Repository</a></p>
+        <a href="https://github.com/dagerzuga/simple-api-test-tool" class="disclaimer-link" target="_blank">GitHub Repository</a>
     </footer>
 
-    <button id="scrollToTopBtn" class="scroll-to-top-btn">
+    <button id="scrollToTopBtn" class="scroll-to-top-btn" title="Go to top">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M18 15l-6-6-6 6"/>
+            <path d="M18 15l-6-6-6 6"></path>
         </svg>
     </button>
 

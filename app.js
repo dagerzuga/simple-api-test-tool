@@ -4,7 +4,8 @@ const proxyOptions = [
     { value: 'corsproxy.io', label: 'corsproxy.io', url: 'https://corsproxy.io/?{url}' },
     { value: 'allorigins.win', label: 'allorigins.win', url: 'https://api.allorigins.win/raw?url={url}' },
     { value: 'cors.sh', label: 'cors.sh', url: 'https://cors.sh/?{url}' },
-    { value: 'cors-anywhere', label: 'CORS Anywhere (Heroku)', url: 'https://cors-anywhere.herokuapp.com/{url}' }
+    { value: 'cors-anywhere', label: 'CORS Anywhere (Heroku)', url: 'https://cors-anywhere.herokuapp.com/{url}' },
+    { value: 'custom', label: 'Custom Proxy', url: null }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const proxySelect = document.querySelector('.js-proxy-select');
     const copyButton = document.getElementById('copyButton');
     const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    const customProxyContainer = document.getElementById('customProxyContainer');
+    const payloadFormatSelect = document.querySelector('.js-payload-format');
 
     // Populate proxy select options
     proxyOptions.forEach(option => {
@@ -25,7 +28,41 @@ document.addEventListener('DOMContentLoaded', () => {
     copyButton.addEventListener('click', copyResponse);
     window.addEventListener('scroll', toggleScrollToTopButton);
     scrollToTopBtn.addEventListener('click', scrollToTop);
+    proxySelect.addEventListener('change', toggleCustomProxyField);
+    payloadFormatSelect.addEventListener('change', updatePayloadPlaceholder);
+
+    updatePayloadPlaceholder();
 });
+
+function toggleCustomProxyField() {
+    const proxySelect = document.querySelector('.js-proxy-select');
+    const customProxyContainer = document.getElementById('customProxyContainer');
+    customProxyContainer.style.display = proxySelect.value === 'custom' ? 'block' : 'none';
+}
+
+function updatePayloadPlaceholder() {
+    const payloadFormatSelect = document.querySelector('.js-payload-format');
+    const payloadTextarea = document.querySelector('.js-payload');
+    const format = payloadFormatSelect.value;
+
+    let placeholder = '';
+    switch (format) {
+        case 'application/json':
+            placeholder = '{\n  "key": "value"\n}';
+            break;
+        case 'application/x-www-form-urlencoded':
+            placeholder = 'key1=value1&key2=value2';
+            break;
+        case 'text/plain':
+            placeholder = 'Enter plain text here';
+            break;
+        case 'application/xml':
+            placeholder = '<?xml version="1.0" encoding="UTF-8"?>\n<root>\n  <element>value</element>\n</root>';
+            break;
+    }
+
+    payloadTextarea.placeholder = placeholder;
+}
 
 async function sendRequests() {
     const requestCount = parseInt(document.querySelector('.js-request-count').value);
@@ -59,7 +96,9 @@ async function sendRequest() {
     const endpoint = document.querySelector('.js-endpoint').value;
     const requestType = document.querySelector('.js-request-type').value;
     const payload = document.querySelector('.js-payload').value;
+    const payloadFormat = document.querySelector('.js-payload-format').value;
     const proxySelect = document.querySelector('.js-proxy-select');
+    const customProxyInput = document.querySelector('.js-custom-proxy');
     const statusElement = document.querySelector('.js-status');
     const statusTextElement = document.querySelector('.js-status-text');
 
@@ -68,16 +107,18 @@ async function sendRequest() {
         let url = endpoint;
         if (selectedProxy && selectedProxy.url) {
             url = selectedProxy.url.replace('{url}', encodeURIComponent(endpoint));
+        } else if (proxySelect.value === 'custom') {
+            url = customProxyInput.value.replace('{url}', encodeURIComponent(endpoint));
         }
 
         const options = {
             method: requestType,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': payloadFormat
             }
         };
 
-        if (requestType === 'POST') {
+        if (['POST', 'PUT', 'PATCH'].includes(requestType)) {
             options.body = payload;
         }
 
@@ -86,13 +127,17 @@ async function sendRequest() {
         statusElement.textContent = response.status;
         statusTextElement.textContent = response.statusText;
 
-        const responseData = await response.json();
-        return responseData;
+        const responseData = await response.text();
+        try {
+            return JSON.parse(responseData);
+        } catch {
+            return responseData;
+        }
     } catch (error) {
         console.error('Request failed:', error);
         statusElement.textContent = 'Error';
         statusTextElement.textContent = error.message;
-        throw error; // Re-throw the error so it's caught in sendRequests
+        throw error;
     }
 }
 

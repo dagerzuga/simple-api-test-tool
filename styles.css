@@ -186,3 +186,7 @@ html {
 .disclaimer-link:hover {
   color: #2980b9;
 }
+
+.custom-proxy-container {
+  display: none;
+}
