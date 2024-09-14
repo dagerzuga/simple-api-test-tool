@@ -179,12 +179,17 @@ html {
   opacity: 1;
 }
 
-.disclaimer-link {
+.text-link {
   color: #3498db;
 }
 
-.disclaimer-link:hover {
+.text-link:hover {
   color: #2980b9;
+}
+
+.sdct-message {
+  font-style: italic;
+  margin-top: 20px;
 }
 
 .custom-proxy-container {

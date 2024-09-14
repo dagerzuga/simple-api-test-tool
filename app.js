@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const customProxyContainer = document.getElementById('customProxyContainer');
     const payloadFormatSelect = document.querySelector('.js-payload-format');
 
-    // Populate proxy select options
     proxyOptions.forEach(option => {
         const optionElement = document.createElement('option');
         optionElement.value = option.value;
@@ -79,7 +78,7 @@ async function sendRequests() {
         } catch (error) {
             results.push({ success: false, error: error.message });
         }
-        
+
         completedRequests++;
         completedRequestsElement.textContent = completedRequests;
 
