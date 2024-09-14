@@ -4,11 +4,17 @@ A lightweight, user-friendly web application for testing API endpoints with supp
 
 ## Features
 
-- Send GET and POST requests to API endpoints
+- Send various types of HTTP requests (GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS) to API endpoints
 - Support for multiple requests with customizable intervals
 - Built-in CORS proxy options for handling cross-origin requests
-- JSON payload support for POST requests
+- Custom proxy option for advanced users
+- Multiple payload format support:
+  - JSON
+  - Form URL Encoded
+  - Plain Text
+  - XML
 - Copy response to clipboard with a single click
-- Responsive design for desktop and mobile use
+
+
 
 ## Live: https://simple-api-test-tool.netlify.app/
